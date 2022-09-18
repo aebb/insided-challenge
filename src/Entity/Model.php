@@ -5,7 +5,7 @@ namespace InSided\Solution\Entity;
 use DateTime;
 use JsonSerializable;
 
-class Model implements JsonSerializable
+abstract class Model implements JsonSerializable
 {
     private const KEY = 16;
 
@@ -19,9 +19,19 @@ class Model implements JsonSerializable
     {
         $now = new DateTime();
 
-        $this->id        = bin2hex(random_bytes(self::KEY));
+        $this->id        = $id        ?? bin2hex(random_bytes(self::KEY));
         $this->createdAt = $createdAt ?? $now;
         $this->updatedAt = $updatedAt ?? $now;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function setData(array $data): Model
+    {
+        return $this;
     }
 
     public function jsonSerialize(): array
