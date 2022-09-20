@@ -6,17 +6,43 @@ use DateTime;
 
 class Article extends Post
 {
-    private string $title;
+    private ?string $title;
 
-    private bool $enableComments;
+    private ?bool $enableComments;
 
-    public function addComment(Comment $comment): bool
+    public function __construct(
+        string $title = null,
+        string $content = null,
+        string $enableComments = null,
+        User $owner = null,
+        array $comments = [],
+        string $id = null,
+        DateTime $createdAt = null,
+        DateTime $updatedAt = null
+    )
     {
-        if($this->enableComments) {
-            return true; //add later;
-        }
-
-        return false;
+        parent::__construct($content, $owner, $comments, $id, $createdAt, $updatedAt);
+        $this->title = $title;
+        $this->enableComments = $enableComments;
     }
 
+    public function setData(array $data): void
+    {
+        parent::setData($data);
+        $this->title   = $data['title'];
+    }
+
+    public function addComment(Comment $comment): ?Comment
+    {
+        if($this->enableComments) {
+            return $this->comments[$comment->getId()] = $comment;
+        }
+
+        return null;
+    }
+
+    public function enableComments(bool $flag): void
+    {
+        $this->content = $flag;
+    }
 }

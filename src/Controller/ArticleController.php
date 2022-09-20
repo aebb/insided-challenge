@@ -2,62 +2,76 @@
 
 namespace InSided\Solution\Controller;
 
-use InSided\Solution\Request\Factory\ConversationActionFactoryInterface;
+use InSided\Solution\Request\Factory\ArticleCommandFactoryInterface;
 use InSided\Solution\Service\ArticleService;
-use InSided\Solution\Utils\AbstractController;
-use InSided\Solution\Validator\ValidatorInterface;
-use JsonSerializable;
+use InSided\Solution\Utils\Controller;
+use InSided\Solution\Utils\Http;
+use InSided\Solution\Utils\ValidatorInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ArticleController extends AbstractController
+
+class ArticleController extends Controller
 {
     public function __construct(
-        private ArticleService $articleService,
-        private ValidatorInterface $validator
-        private ConversationActionFactoryInterface $actionFactory,
-    ){}
+        ValidatorInterface                     $validator,
+        ResponseFactoryInterface               $responseFactory,
+        private ArticleService                 $service,
+        private ArticleCommandFactoryInterface $actionFactory,
 
-//    /**
-//     * @Route("/community/{user-id}/{community-id}/articles", name="list.articles", methods={"GET"})
-//     */
-//    public function listAction(ServerRequestInterface $request): JsonSerializable
-//    {
-//        $this->articleService->list($this->validator->validate(new ListAction($request)));
-//    }
-//
-//    /**
-//     * @Route("/community/{user-id}/{community-id}/articles", name="create.article", methods={"POST"})
-//     */
-//    public function createAction(Request $request): JsonSerializable
-//    {
-//        $this->articleService->create$this->validator->validate(new CreateAction($request)));
-//    }
-//
-//    /**
-//     * @Route("/community/{user-id}/{community-id}/articles/{article-id}", name="update.article", methods={"PUT"})
-//     */
-//    public function updateAction(Request $request): JsonSerializable
-//    {
-//        $this->articleService->update($this->validator->validate(new UpdateAction($request)));
-//    }
-//
-//    /**
-//     * @Route("/community/{user-id}/{community-id}/articles/{article-id}", name="delete.article", methods={"PUT"})
-//     */
-//    public function deleteAction(Request $request): JsonSerializable
-//    {
-//        $this->articleService->delete($this->validator->validate(new DeleteAction($request)));
-//    }
-//
-//
-//    /**
-//     *  @Route("/community/{user-id}/{community-id}/articles/{article-id}", name="disable.article.comments", methods={"PATCH"})
-//     */
-//    public function disableCommentsAction(Request $request): JsonSerializable
-//    {
-////        $this->articleService->disableComments(
-////            $this->validator->validate($this->actionFactory->createDisableCommentAction($request))
-////        );
-////        $this->articleService->disableComments($this->validator->validate(new DisableCommentAction($request)));
-//    }
+    ){
+        parent::__construct($validator, $responseFactory);
+    }
+
+    /**
+     * @Route("/community/{user-id}/{community-id}/articles", name="list.articles", methods={"GET"})
+     */
+    public function listAction(ServerRequestInterface $request): ResponseInterface
+    {
+        $command = $this->validator->validate($this->actionFactory->listArticleAction($request));
+
+        return $this->execute(fn() => $this->service->list($command));
+    }
+
+    /**
+     * @Route("/community/{user-id}/{community-id}/articles/{type}", name="create.article", methods={"POST"})
+     */
+    public function createAction(ServerRequestInterface $request): ResponseInterface
+    {
+        $command = $this->validator->validate($this->actionFactory->createArticleAction($request));
+
+        return $this->execute(fn() => $this->service->create($command), HTTP::HTTP_CREATED);
+    }
+
+    /**
+     * @Route("/community/{user-id}/{community-id}/articles/{article-id}", name="update.article", methods={"PUT"})
+     */
+    public function updateAction(ServerRequestInterface $request): ResponseInterface
+    {
+        $command = $this->validator->validate($this->actionFactory->updateArticleAction($request));
+
+        return $this->execute(fn() => $this->service->update($command));
+    }
+
+    /**
+     * @Route("/community/{user-id}/{community-id}/articles/{article-id}", name="delete.article", methods={"DELETE"})
+     */
+    public function deleteAction(ServerRequestInterface $request): ResponseInterface
+    {
+        $command = $this->validator->validate($this->actionFactory->deleteArticleAction($request));
+
+        return $this->execute(fn() => $this->service->delete($command));
+    }
+
+
+    /**
+     * @Route("/community/{user-id}/{community-id}/articles/{article-id}/disableComments", name="enable.article", methods={"PATCH"})
+     */
+    public function enableCommentsAction(ServerRequestInterface $request): ResponseInterface
+    {
+        $command = $this->validator->validate($this->actionFactory->enableArticleAction($request));
+
+        return $this->execute(fn() => $this->service->enableComments($command));
+    }
 }

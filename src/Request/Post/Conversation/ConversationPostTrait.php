@@ -7,9 +7,7 @@ use InSided\Solution\Request\Base\PostTypeTrait;
 
 trait ConversationPostTrait
 {
-    use PostTypeTrait{
-        PostTypeTrait::getType as parentGetType();
-    }
+    use PostTypeTrait;
 
     public function getType(): string
     {

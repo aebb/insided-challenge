@@ -29,13 +29,23 @@ abstract class Model implements JsonSerializable
         return $this->id;
     }
 
-    public function setData(array $data): Model
-    {
-        return $this;
-    }
-
     public function jsonSerialize(): array
     {
-        return [];
+        $result = [];
+        foreach (get_object_vars($this) as $name => $value) {
+            if ($value instanceof JsonSerializable) {
+                continue;
+            }
+
+            if ($value instanceof DateTime) {
+                $result[$name] = $value->format('Y-m-d H:i:s');
+            }
+
+            if (null !== $value) {
+                $result[$name] = $value;
+            }
+        }
+
+        return $result;
     }
 }

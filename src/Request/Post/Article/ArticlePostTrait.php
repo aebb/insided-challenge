@@ -7,9 +7,7 @@ use InSided\Solution\Request\Base\PostTypeTrait;
 
 trait ArticlePostTrait
 {
-    use PostTypeTrait{
-        PostTypeTrait::getType as parentGetType();
-    }
+    use PostTypeTrait;
 
     public function getType(): string
     {

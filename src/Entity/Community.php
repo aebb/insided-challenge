@@ -1,4 +1,3 @@
-
 <?php
 
 namespace InSided\Solution\Entity;
@@ -7,9 +6,9 @@ use DateTime;
 
 class Community extends Model
 {
-    private string $name;
+    private ?string $name;
 
-    private array $posts;
+    private ?array $posts;
 
     public function __construct(
         string $name,

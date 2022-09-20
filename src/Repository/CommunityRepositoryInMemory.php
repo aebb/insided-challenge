@@ -8,18 +8,15 @@ class CommunityRepositoryInMemory extends AbstractArrayRepository implements Com
 {
     private static array $container = [];
 
-    function getContainer(): array
+    public function findCommunityById(string $id): ?Community
     {
-       return self::$container;
+        return self::$container[$id] ?? null;
     }
 
-    function findCommunityById(string $id): ?Community
+    public function save(Community $entity): ?Community
     {
-       return $this->findById($id);
+        self::$container[$entity->getId()] = $entity;
+        return $entity;
     }
 
-    function save(Community $community): Community
-    {
-        return $this->add($community);
-    }
 }
