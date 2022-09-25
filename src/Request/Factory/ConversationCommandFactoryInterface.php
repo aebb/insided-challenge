@@ -9,8 +9,8 @@ use InSided\Solution\Request\Post\Conversation\UpdateConversationCommand;
 
 interface ConversationCommandFactoryInterface
 {
-    function createConversationAction(mixed $buffer): CreateConversationCommand;
-    function deleteConversationAction(mixed $buffer): DeleteConversationCommand;
-    function listConversationAction(mixed $buffer):   ListConversationCommand;
-    function updateConversationAction(mixed $buffer): UpdateConversationCommand;
+    public function createConversationAction(mixed $buffer): CreateConversationCommand;
+    public function deleteConversationAction(mixed $buffer): DeleteConversationCommand;
+    public function listConversationAction(mixed $buffer): ListConversationCommand;
+    public function updateConversationAction(mixed $buffer): UpdateConversationCommand;
 }

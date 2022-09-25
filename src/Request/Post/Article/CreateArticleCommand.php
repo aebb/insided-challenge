@@ -14,22 +14,21 @@ class CreateArticleCommand extends CreatePostCommand
     private const ERROR_EMPTY_TITLE = 'no title provided';
 
     public function __construct(
-        User                    $user,
-        string                  $communityId,
-        string                  $content,
+        User $user,
+        string $communityId,
+        string $content,
         private readonly string $title
-    )
-    {
+    ) {
         parent::__construct($user, $communityId, $content);
     }
 
     public function getData(): array
     {
-       return [
+        return [
          'owner'   => $this->user,
          'content' => $this->content,
          'title'   => $this->title,
-       ];
+        ];
     }
 
     public function validate(): bool

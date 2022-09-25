@@ -2,9 +2,9 @@
 
 namespace InSided\Solution\Request\Factory;
 
-use InSided\Solution\Request\Comments\CreateCommentCommand;
+use InSided\Solution\Request\Comment\CreateCommentCommand;
 
 interface CommentCommandFactoryInterface
 {
-    function createCommentAction(mixed $buffer): CreateCommentCommand;
+    public function createCommentAction(mixed $buffer): CreateCommentCommand;
 }

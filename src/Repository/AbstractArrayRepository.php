@@ -6,5 +6,4 @@ use InSided\Solution\Entity\Model;
 
 abstract class AbstractArrayRepository
 {
-
 }

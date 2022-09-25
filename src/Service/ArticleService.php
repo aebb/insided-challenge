@@ -26,6 +26,8 @@ class ArticleService extends PostService
         $community = $this->getCommunity($action->getCommunityId());
         $article   = $this->getArticle($community, $action->getPostId());
 
+        $this->hasRights($user, $article);
+
         $article->enableComments($action->getData());
 
         $this->communityRepository->save($community);

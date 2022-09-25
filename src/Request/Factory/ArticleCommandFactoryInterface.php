@@ -7,12 +7,12 @@ use InSided\Solution\Request\Post\Article\DeleteArticleCommand;
 use InSided\Solution\Request\Post\Article\EnableArticleCommand;
 use InSided\Solution\Request\Post\Article\ListArticleCommand;
 use InSided\Solution\Request\Post\Article\UpdateArticleCommand;
+
 interface ArticleCommandFactoryInterface
 {
-    function createArticleAction(mixed $buffer): CreateArticleCommand;
-    function deleteArticleAction(mixed $buffer): DeleteArticleCommand;
-    function enableArticleAction(mixed $buffer): EnableArticleCommand;
-    function listArticleAction(mixed $buffer):   ListArticleCommand;
-    function updateArticleAction(mixed $buffer): UpdateArticleCommand;
-
+    public function createArticleAction(mixed $buffer): CreateArticleCommand;
+    public function deleteArticleAction(mixed $buffer): DeleteArticleCommand;
+    public function enableArticleAction(mixed $buffer): EnableArticleCommand;
+    public function listArticleAction(mixed $buffer): ListArticleCommand;
+    public function updateArticleAction(mixed $buffer): UpdateArticleCommand;
 }

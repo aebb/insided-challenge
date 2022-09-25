@@ -17,17 +17,16 @@ class UpdateArticleCommand extends UpdatePostCommand
         string $postId,
         string $content,
         private readonly string $title
-    )
-    {
+    ) {
         parent::__construct($user, $communityId, $postId, $content);
     }
 
     public function getData(): array
     {
-       return [
+        return [
            'content' => $this->content,
            'title'   => $this->title,
-       ];
+        ];
     }
 
     public function validate(): bool

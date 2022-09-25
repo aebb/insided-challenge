@@ -1,6 +1,6 @@
 <?php
 
-namespace InSided\Solution\Request\Comments;
+namespace InSided\Solution\Request\Comment;
 
 use InSided\Solution\Entity\User;
 use InSided\Solution\Request\Post\GetPostCommand;

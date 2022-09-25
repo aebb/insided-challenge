@@ -2,7 +2,6 @@
 
 namespace InSided\Solution\Utils;
 
-
 use Exception;
 use JsonSerializable;
 use Throwable;

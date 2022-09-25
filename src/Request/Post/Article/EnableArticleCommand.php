@@ -12,8 +12,7 @@ class EnableArticleCommand extends GetPostCommand
         string $communityId,
         string $postId,
         private readonly bool $enableComments = false
-    )
-    {
+    ) {
         parent::__construct($user, $communityId, $postId);
     }
 

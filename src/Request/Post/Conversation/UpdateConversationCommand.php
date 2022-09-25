@@ -12,8 +12,8 @@ class UpdateConversationCommand extends UpdatePostCommand
 {
     public function getData(): array
     {
-       return [
-         'content' => $this->content
-       ];
+        return [
+            'content' => $this->content
+        ];
     }
 }

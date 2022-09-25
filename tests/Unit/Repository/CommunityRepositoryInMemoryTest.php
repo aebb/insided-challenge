@@ -2,7 +2,6 @@
 
 namespace InSided\Solution\Unit\Repository;
 
-
 use InSided\Solution\Entity\Community;
 use InSided\Solution\Repository\CommunityRepositoryInMemory;
 use PHPUnit\Framework\TestCase;

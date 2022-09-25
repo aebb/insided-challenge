@@ -15,17 +15,23 @@ abstract class Post extends Message
         string $id = null,
         DateTime $createdAt = null,
         DateTime $updatedAt = null
-    )
-    {
+    ) {
         parent::__construct($content, $owner, $id, $createdAt, $updatedAt);
         $this->comments = $comments;
     }
 
-    abstract function addComment(Comment $comment): ?Comment;
+    abstract public function addComment(Comment $comment): ?Comment;
 
     public function setData(array $data)
     {
         $this->content = $data['content'];
     }
 
+    public function jsonSerialize(): array
+    {
+        $result = parent::jsonSerialize();
+        $owner = $this->getOwner() ? ['owner' => $this->getOwner()->getUsername()] : [];
+
+        return array_merge($result, $owner);
+    }
 }

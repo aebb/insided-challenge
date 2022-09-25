@@ -12,9 +12,9 @@ class CreateConversationCommand extends CreatePostCommand
 
     public function getData(): array
     {
-       return [
+        return [
            'owner'   => $this->user,
            'content' => $this->content
-       ];
+        ];
     }
 }

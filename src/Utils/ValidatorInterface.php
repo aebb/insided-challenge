@@ -6,5 +6,5 @@ use InSided\Solution\Request\Base\AbstractCommand;
 
 interface ValidatorInterface
 {
-    function validate(AbstractCommand $action): AbstractCommand;
+    public function validate(AbstractCommand $action): AbstractCommand;
 }

@@ -15,8 +15,7 @@ class Comment extends Message
         string $id = null,
         DateTime $createdAt = null,
         DateTime $updatedAt = null
-    )
-    {
+    ) {
         parent::__construct($content, $owner, $id, $createdAt, $updatedAt);
         $this->parent = $post;
     }

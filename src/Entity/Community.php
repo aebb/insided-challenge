@@ -6,9 +6,9 @@ use DateTime;
 
 class Community extends Model
 {
-    private ?string $name;
+    protected ?string $name;
 
-    private ?array $posts;
+    protected ?array $posts;
 
     public function __construct(
         string $name,
@@ -16,8 +16,7 @@ class Community extends Model
         string $id = null,
         DateTime $createdAt = null,
         DateTime $updatedAt = null
-    )
-    {
+    ) {
         parent::__construct($id, $createdAt, $updatedAt);
         $this->name = $name;
         $this->posts = $posts;

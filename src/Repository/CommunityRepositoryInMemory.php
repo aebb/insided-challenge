@@ -18,5 +18,4 @@ class CommunityRepositoryInMemory extends AbstractArrayRepository implements Com
         self::$container[$entity->getId()] = $entity;
         return $entity;
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace InSided\Solution\Controller;
 
-
 use InSided\Solution\Request\Factory\ConversationCommandFactoryInterface;
 use InSided\Solution\Service\ConversationService;
 use InSided\Solution\Utils\Controller;
@@ -15,12 +14,11 @@ use Psr\Http\Message\ServerRequestInterface;
 class ConversationController extends Controller
 {
     public function __construct(
-        ValidatorInterface                          $validator,
-        ResponseFactoryInterface                    $responseFactory,
-        private ConversationService                 $service,
+        ValidatorInterface $validator,
+        ResponseFactoryInterface $responseFactory,
+        private ConversationService $service,
         private ConversationCommandFactoryInterface $actionFactory,
-
-    ){
+    ) {
         parent::__construct($validator, $responseFactory);
     }
 
@@ -29,9 +27,11 @@ class ConversationController extends Controller
      */
     public function listAction(ServerRequestInterface $request): ResponseInterface
     {
-        $command = $this->validator->validate($this->actionFactory->listConversationAction($request));
-
-        return $this->execute(fn() => $this->service->list($command));
+        return $this->execute(
+            fn() => $this->service->list(
+                $this->validator->validate($this->actionFactory->listConversationAction($request))
+            )
+        );
     }
 
     /**
@@ -39,29 +39,41 @@ class ConversationController extends Controller
      */
     public function createAction(ServerRequestInterface $request): ResponseInterface
     {
-        $command = $this->validator->validate($this->actionFactory->createConversationAction($request));
-
-        return $this->execute(fn() => $this->service->create($command), HTTP::HTTP_CREATED);
+        return $this->execute(
+            fn() => $this->service->create(
+                $this->validator->validate($this->actionFactory->createConversationAction($request))
+            ),
+            HTTP::HTTP_CREATED
+        );
     }
 
     /**
-     * @Route("/community/{user-id}/{community-id}/conversations/{conversation-id}", name="update.conversation", methods={"PUT"})
+     * @Route(
+     *     "/community/{user-id}/{community-id}/conversations/{conversation-id}",
+     *     name="update.conversation", methods={"PUT"}
+     * )
      */
     public function updateAction(ServerRequestInterface $request): ResponseInterface
     {
-        $command = $this->validator->validate($this->actionFactory->updateConversationAction($request));
-
-        return $this->execute(fn() => $this->service->update($command));
+        return $this->execute(
+            fn() => $this->service->update(
+                $this->validator->validate($this->actionFactory->updateConversationAction($request))
+            )
+        );
     }
 
     /**
-     * @Route("/community/{user-id}/{community-id}/conversations/{conversation-id}", name="delete.conversation", methods={"DELETE"})
+     * @Route(
+     *     "/community/{user-id}/{community-id}/conversations/{conversation-id}",
+     *     name="delete.conversation", methods={"DELETE"}
+     * )
      */
     public function deleteAction(ServerRequestInterface $request): ResponseInterface
     {
-        $command = $this->validator->validate($this->actionFactory->deleteConversationAction($request));
-
-        return $this->execute(fn() => $this->service->delete($command));
+        return $this->execute(
+            fn() => $this->service->delete(
+                $this->validator->validate($this->actionFactory->deleteConversationAction($request))
+            )
+        );
     }
-
 }

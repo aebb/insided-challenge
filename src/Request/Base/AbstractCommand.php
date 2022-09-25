@@ -11,10 +11,9 @@ abstract class AbstractCommand
     private const ERROR_EMPTY_USER   = 'No user provided';
     private const ERROR_EMPTY_COMMUNITY_ID = 'No community-id provided';
 
-    public function __construct(
-        protected  readonly User $user,
-        protected  readonly string $communityId,
-    ){}
+    public function __construct(protected readonly User $user, protected readonly string $communityId)
+    {
+    }
 
     public function getUser(): User
     {
@@ -36,6 +35,7 @@ abstract class AbstractCommand
 
     /**
      * @throws AppException
+     * @codeCoverageIgnore
      */
     private function validateUser(): bool
     {

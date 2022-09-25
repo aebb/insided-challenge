@@ -6,5 +6,4 @@ use InSided\Solution\Request\Post\DeletePostCommand;
 
 class DeleteConversationCommand extends DeletePostCommand
 {
-
 }

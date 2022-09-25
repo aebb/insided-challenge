@@ -15,15 +15,14 @@ abstract class CreatePostCommand extends PostCommand
     private const ERROR_EMPTY_CONTENT = 'no post content provided';
 
     public function __construct(
-        User                      $user,
-        string                    $communityId,
+        User $user,
+        string $communityId,
         protected readonly string $content
-    )
-    {
+    ) {
         parent::__construct($user, $communityId);
     }
 
-    abstract function getData(): array;
+    abstract public function getData(): array;
 
     public function validate(): bool
     {

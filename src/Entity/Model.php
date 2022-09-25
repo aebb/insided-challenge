@@ -32,16 +32,18 @@ abstract class Model implements JsonSerializable
     public function jsonSerialize(): array
     {
         $result = [];
-        foreach (get_object_vars($this) as $name => $value) {
-            if ($value instanceof JsonSerializable) {
+        $vars = get_object_vars($this);
+        foreach ($vars as $name => $value) {
+            if ($value instanceof DateTime) {
+                $result[$name] = $value->format('Y-m-d H:i:s');
                 continue;
             }
 
-            if ($value instanceof DateTime) {
-                $result[$name] = $value->format('Y-m-d H:i:s');
+            if ($value instanceof JsonSerializable || is_array($value)) {
+                continue;
             }
 
-            if (null !== $value) {
+            if ($value !== null) {
                 $result[$name] = $value;
             }
         }

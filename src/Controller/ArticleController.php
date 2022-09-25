@@ -11,16 +11,14 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-
 class ArticleController extends Controller
 {
     public function __construct(
-        ValidatorInterface                     $validator,
-        ResponseFactoryInterface               $responseFactory,
-        private ArticleService                 $service,
+        ValidatorInterface $validator,
+        ResponseFactoryInterface $responseFactory,
+        private ArticleService $service,
         private ArticleCommandFactoryInterface $actionFactory,
-
-    ){
+    ) {
         parent::__construct($validator, $responseFactory);
     }
 
@@ -29,9 +27,11 @@ class ArticleController extends Controller
      */
     public function listAction(ServerRequestInterface $request): ResponseInterface
     {
-        $command = $this->validator->validate($this->actionFactory->listArticleAction($request));
-
-        return $this->execute(fn() => $this->service->list($command));
+        return $this->execute(
+            fn() => $this->service->list(
+                $this->validator->validate($this->actionFactory->listArticleAction($request))
+            )
+        );
     }
 
     /**
@@ -39,9 +39,12 @@ class ArticleController extends Controller
      */
     public function createAction(ServerRequestInterface $request): ResponseInterface
     {
-        $command = $this->validator->validate($this->actionFactory->createArticleAction($request));
-
-        return $this->execute(fn() => $this->service->create($command), HTTP::HTTP_CREATED);
+        return $this->execute(
+            fn() => $this->service->create(
+                $this->validator->validate($this->actionFactory->createArticleAction($request))
+            ),
+            HTTP::HTTP_CREATED
+        );
     }
 
     /**
@@ -49,9 +52,11 @@ class ArticleController extends Controller
      */
     public function updateAction(ServerRequestInterface $request): ResponseInterface
     {
-        $command = $this->validator->validate($this->actionFactory->updateArticleAction($request));
-
-        return $this->execute(fn() => $this->service->update($command));
+        return $this->execute(
+            fn() => $this->service->update(
+                $this->validator->validate($this->actionFactory->updateArticleAction($request))
+            )
+        );
     }
 
     /**
@@ -59,19 +64,26 @@ class ArticleController extends Controller
      */
     public function deleteAction(ServerRequestInterface $request): ResponseInterface
     {
-        $command = $this->validator->validate($this->actionFactory->deleteArticleAction($request));
-
-        return $this->execute(fn() => $this->service->delete($command));
+        return $this->execute(
+            fn() => $this->service->delete(
+                $this->validator->validate($this->actionFactory->deleteArticleAction($request))
+            )
+        );
     }
 
 
     /**
-     * @Route("/community/{user-id}/{community-id}/articles/{article-id}/disableComments", name="enable.article", methods={"PATCH"})
+     * @Route(
+     *     "/community/{user-id}/{community-id}/articles/{article-id}/disableComments",
+     *      name="enable.article", methods={"PATCH"}
+     * )
      */
     public function enableCommentsAction(ServerRequestInterface $request): ResponseInterface
     {
-        $command = $this->validator->validate($this->actionFactory->enableArticleAction($request));
-
-        return $this->execute(fn() => $this->service->enableComments($command));
+        return $this->execute(
+            fn() => $this->service->enableComments(
+                $this->validator->validate($this->actionFactory->enableArticleAction($request))
+            )
+        );
     }
 }

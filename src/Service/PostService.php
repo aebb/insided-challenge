@@ -5,23 +5,17 @@ namespace InSided\Solution\Service;
 use Exception;
 use InSided\Solution\Entity\Post;
 use InSided\Solution\Entity\User;
-use InSided\Solution\Repository\CommunityRepositoryInterface;
 use InSided\Solution\Request\Post\CreatePostCommand;
 use InSided\Solution\Request\Post\DeletePostCommand;
 use InSided\Solution\Request\Post\ListPostCommand;
 use InSided\Solution\Request\Post\UpdatePostCommand;
+use InSided\Solution\Utils\AppException;
 use InSided\Solution\Utils\ErrorCode;
 use InSided\Solution\Utils\Http;
 use JsonSerializable;
-use Psr\Log\LoggerInterface;
 
 class PostService extends AbstractService
 {
-    public function __construct(LoggerInterface $logger, CommunityRepositoryInterface $communityRepository)
-    {
-        parent::__construct($logger, $communityRepository);
-    }
-
     /**
      * @throws Exception
      */
@@ -79,11 +73,11 @@ class PostService extends AbstractService
      */
     protected function hasRights(User $user, Post $post): bool
     {
-        if ($post->getOwner()->getId() === $user->getId()) {
+        if (($post->getOwner()->getId() === $user->getId()) || $user->isModerator()) {
             return true;
         }
 
         $this->logger->error(ErrorCode::COMMENT_ACTION_NOT_AVAILABLE);
-        throw new Exception(ErrorCode::COMMENT_ACTION_NOT_AVAILABLE, HTTP::HTTP_UNAUTHORIZED);
+        throw new AppException(ErrorCode::COMMENT_ACTION_NOT_AVAILABLE, HTTP::HTTP_UNAUTHORIZED);
     }
 }

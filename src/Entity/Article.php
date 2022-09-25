@@ -6,9 +6,9 @@ use DateTime;
 
 class Article extends Post
 {
-    private ?string $title;
+    protected ?string $title;
 
-    private ?bool $enableComments;
+    protected ?bool $enableComments;
 
     public function __construct(
         string $title = null,
@@ -19,8 +19,7 @@ class Article extends Post
         string $id = null,
         DateTime $createdAt = null,
         DateTime $updatedAt = null
-    )
-    {
+    ) {
         parent::__construct($content, $owner, $comments, $id, $createdAt, $updatedAt);
         $this->title = $title;
         $this->enableComments = $enableComments;
@@ -29,12 +28,12 @@ class Article extends Post
     public function setData(array $data): void
     {
         parent::setData($data);
-        $this->title   = $data['title'];
+        $this->title = $data['title'];
     }
 
     public function addComment(Comment $comment): ?Comment
     {
-        if($this->enableComments) {
+        if ($this->enableComments) {
             return $this->comments[$comment->getId()] = $comment;
         }
 
@@ -43,6 +42,6 @@ class Article extends Post
 
     public function enableComments(bool $flag): void
     {
-        $this->content = $flag;
+        $this->enableComments = $flag;
     }
 }

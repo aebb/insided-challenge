@@ -7,5 +7,4 @@ use InSided\Solution\Request\Base\PostCommand;
 
 abstract class DeletePostCommand extends GetPostCommand
 {
-
 }

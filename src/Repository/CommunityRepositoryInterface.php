@@ -6,6 +6,6 @@ use InSided\Solution\Entity\Community;
 
 interface CommunityRepositoryInterface
 {
-    function findCommunityById(string $id): ?Community;
-    function save(Community $entity): ?Community;
+    public function findCommunityById(string $id): ?Community;
+    public function save(Community $entity): ?Community;
 }

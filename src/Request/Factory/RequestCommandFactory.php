@@ -2,7 +2,7 @@
 
 namespace InSided\Solution\Request\Factory;
 
-use InSided\Solution\Request\Comments\CreateCommentCommand;
+use InSided\Solution\Request\Comment\CreateCommentCommand;
 use InSided\Solution\Request\Post\Article\CreateArticleCommand;
 use InSided\Solution\Request\Post\Article\DeleteArticleCommand;
 use InSided\Solution\Request\Post\Article\EnableArticleCommand;
@@ -14,7 +14,10 @@ use InSided\Solution\Request\Post\Conversation\ListConversationCommand;
 use InSided\Solution\Request\Post\Conversation\UpdateConversationCommand;
 use Psr\Http\Message\ServerRequestInterface;
 
-class RequestCommandFactory implements ArticleCommandFactoryInterface, ConversationCommandFactoryInterface, CommentCommandFactoryInterface
+class RequestCommandFactory implements
+    ArticleCommandFactoryInterface,
+    ConversationCommandFactoryInterface,
+    CommentCommandFactoryInterface
 {
     /**
      * @param ServerRequestInterface $buffer
@@ -34,11 +37,11 @@ class RequestCommandFactory implements ArticleCommandFactoryInterface, Conversat
      */
     public function deleteArticleAction($buffer): DeleteArticleCommand
     {
-       return new DeleteArticleCommand(
-           $buffer->getAttribute('user'),
-           $buffer->getAttribute('community-id'),
-           $buffer->getAttribute('article-id'),
-       );
+        return new DeleteArticleCommand(
+            $buffer->getAttribute('user'),
+            $buffer->getAttribute('community-id'),
+            $buffer->getAttribute('article-id'),
+        );
     }
 
     /**
@@ -46,11 +49,11 @@ class RequestCommandFactory implements ArticleCommandFactoryInterface, Conversat
      */
     public function enableArticleAction($buffer): EnableArticleCommand
     {
-       return new EnableArticleCommand(
-           $buffer->getAttribute('user'),
-           $buffer->getAttribute('community-id'),
-           $buffer->getAttribute('article-id'),
-       );
+        return new EnableArticleCommand(
+            $buffer->getAttribute('user'),
+            $buffer->getAttribute('community-id'),
+            $buffer->getAttribute('article-id'),
+        );
     }
 
     /**
@@ -58,10 +61,10 @@ class RequestCommandFactory implements ArticleCommandFactoryInterface, Conversat
      */
     public function listArticleAction($buffer): ListArticleCommand
     {
-       return new ListArticleCommand(
-           $buffer->getAttribute('user'),
-           $buffer->getAttribute('community-id'),
-       );
+        return new ListArticleCommand(
+            $buffer->getAttribute('user'),
+            $buffer->getAttribute('community-id'),
+        );
     }
 
     /**

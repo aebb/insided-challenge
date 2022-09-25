@@ -16,8 +16,7 @@ abstract class Message extends Model
         string $id = null,
         DateTime $createdAt = null,
         DateTime $updatedAt = null
-    )
-    {
+    ) {
         parent::__construct($id, $createdAt, $updatedAt);
         $this->content =  $content;
         $this->owner = $owner;

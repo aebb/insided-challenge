@@ -2,7 +2,6 @@
 
 namespace InSided\Solution\Unit\Utils;
 
-
 use Exception;
 use InSided\Solution\Entity\Model;
 use InSided\Solution\Utils\AppException;
@@ -45,7 +44,6 @@ class ControllerTest extends TestCase
 
         $this->stream->expects($this->once())
             ->method('write');
-
     }
 
     /**
@@ -61,7 +59,9 @@ class ControllerTest extends TestCase
 
         $this->assertInstanceOf(
             ResponseInterface::class,
-            $this->sut->execute(function() {return $this->createMock(Model::class);})
+            $this->sut->execute(function () {
+                return $this->createMock(Model::class);
+            })
         );
     }
 
@@ -78,9 +78,10 @@ class ControllerTest extends TestCase
 
         $this->assertInstanceOf(
             ResponseInterface::class,
-            $this->sut->execute(function() { throw new AppException('error', 401 ); })
+            $this->sut->execute(function () {
+                throw new AppException('error', 401);
+            })
         );
-
     }
 
     /**
@@ -96,8 +97,9 @@ class ControllerTest extends TestCase
 
         $this->assertInstanceOf(
             ResponseInterface::class,
-            $this->sut->execute(function() {throw new Exception();})
+            $this->sut->execute(function () {
+                throw new Exception();
+            })
         );
-
     }
 }
